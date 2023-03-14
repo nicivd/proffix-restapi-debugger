@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy": "ng deploy proffix-restapi-debugger --base-href=/proffix-restapi-debugger/"
   },
   "private": true,
   "dependencies": {
