@@ -8,6 +8,9 @@ import { ConnectionComponent } from './connection/connection.component';
 import { LoginComponent } from './login/login.component';
 import { DebuggerComponent } from './debugger/debugger.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { PxRestApiModule, PxConfiguration } from '@proffix/restapi-angular-library';
+import { AppConfiguration } from './app.configuration';
+
 
 @NgModule({
   declarations: [
@@ -20,9 +23,13 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    PxRestApiModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    AppConfiguration,
+    { provide: PxConfiguration, useExisting: AppConfiguration }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
