@@ -7,13 +7,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConnectionComponent } from './connection/connection.component';
 import { LoginComponent } from './login/login.component';
 import { DebuggerComponent } from './debugger/debugger.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ConnectionComponent,
     LoginComponent,
-    DebuggerComponent
+    DebuggerComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

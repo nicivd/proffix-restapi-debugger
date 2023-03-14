@@ -1,4 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc.)
+@import '../node_modules/bootstrap/scss/functions';
+
+// 2. Include any default variable overrides here
+/* Importing Proffix theme */
+@import '../src/variables'; // Custom theme variables
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/bootstrap';

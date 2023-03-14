@@ -1,0 +1,136 @@
+// Bootswatch - 5.2.2 - https://bootswatch.com
+
+/*
+@import "./../node_modules/bootstrap/scss/functions";
+@import "./../node_modules/bootstrap/scss/variables";
+@import "./../node_modules/bootstrap/scss/mixins";
+*/
+
+$theme: "proffix";
+
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+// Color system
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #ecf0f1;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #b4bcc2;
+$gray-600: #95a5a6;
+$gray-700: #7b8a8b;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000;
+
+$proffixBlue80: #00adcc;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #e74c3c;
+$orange: #fd7e14;
+$yellow: #f39c12;
+$green: #18bc9c;
+$teal: #20c997;
+$cyan: #3498db;
+
+$primary: $proffixBlue80;
+$secondary: $gray-700;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-200;
+$dark: $gray-700;
+
+$min-contrast-ratio: 2.05;
+
+// Background
+$body-bg: $light;
+$input-bg: $white;
+
+// Links
+$link-color: $primary;
+
+// Fonts
+// stylelint-disable-next-line value-keyword-case
+$font-family-sans-serif: Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$h1-font-size: 1.875rem; // 30px
+$h2-font-size: 1.625rem; // 26px
+$h3-font-size: 1.25rem; // 20px
+$h4-font-size: 1.125rem; // 18px
+
+// Tables
+$table-bg-scale: 0;
+
+// Dropdowns
+$dropdown-link-color: $gray-700;
+$dropdown-link-hover-color: $white;
+$dropdown-link-hover-bg: $gray-600;
+$dropdown-link-active-bg: $secondary;
+
+// Navs
+// $variable-prefix: $prefix !default; // Deprecated in v5.2.0 for the shorter `$prefix`
+$prefix: bs-;
+
+$nav-link-padding-y: .5rem;
+$nav-link-padding-x: 2rem;
+$nav-link-disabled-color: $gray-600;
+$nav-tabs-border-color: $gray-200;
+$nav-link-color: var($primary) !important;
+$nav-link-hover-color: var($primary) !important;
+
+// Navbar
+$navbar-padding-y: 0.75rem;
+$navbar-dark-color: $white;
+$navbar-dark-hover-color: $primary;
+$navbar-dark-active-color: $primary;
+
+$navbar-dark-brand-color: $white;
+$navbar-dark-brand-hover-color: $navbar-dark-brand-color;
+
+// Pagination
+$pagination-color: $white;
+$pagination-bg: $success;
+$pagination-border-width: 0;
+$pagination-border-color: transparent;
+$pagination-hover-color: $white;
+$pagination-hover-bg: darken($success, 15%);
+$pagination-hover-border-color: transparent;
+$pagination-active-bg: $pagination-hover-bg;
+$pagination-active-border-color: transparent;
+$pagination-disabled-color: $gray-200;
+$pagination-disabled-bg: lighten($success, 15%);
+$pagination-disabled-border-color: transparent;
+
+// List group
+$list-group-hover-bg: $gray-200;
+$list-group-disabled-bg: $gray-200;
+
+// Breadcrumbs
+$breadcrumb-padding-y: .375rem;
+$breadcrumb-padding-x: .75rem;
+$breadcrumb-border-radius: .25rem;
+
+// Close
+$btn-close-color: $black;
+$btn-close-opacity: .4;
+$btn-close-hover-opacity: 1;
+
+// Button link
+/*
+$btn-link-color: var(--#{$prefix}link-color);
+$btn-link-hover-color: var(--#{$prefix}link-hover-color);
+$btn-link-disabled-color: $gray-600;
+*/
+
+// Form select field
+$form-select-disabled-bg: $gray-300;
