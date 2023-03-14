@@ -1,25 +1,29 @@
 <div class="m-5">
   <h2>Verbindungseinstellungen</h2>
-  <div class="row">
-    <div class="col-4">
-      <div class="form-floating mb-3">
-        <input type="url" class="form-control" id="RESTAPIInput" placeholder="http://placeholder.com">
-        <label for="RESTAPIInput">REST API URL</label>
-        <p>z.B.: https://restapi.com/pxapi/v4</p>
-      </div>
-      <div class="form-floating">
-        <input type="password" class="form-control" id="RESTAPIPassword" placeholder="RESTAPIPassword">
-        <label for="RESTAPIPassword">REST API Passwort</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="checkConnectionSave">
-        <label class="form-check-label" for="checkConnectionSave">
-          Verbindungseinstellungen speichern
-        </label>
-      </div>
-      <div>
-        <button type="button" class="btn btn-primary">Verbinden</button>
+  <form [formGroup]="restapiForm" (ngSubmit)="connectToRESTAPI()">
+    <div class="row">
+      <div class="col-4">
+        <div class="form-floating mb-3">
+          <input type="url" class="form-control" id="RESTAPIInput" placeholder="http://placeholder.com"
+            formControlName="restapiurl">
+          <label for="RESTAPIInput">REST API URL</label>
+          <p>z.B.: https://restapi.com/pxapi/v4</p>
+        </div>
+        <div class="form-floating">
+          <input type="password" class="form-control" id="RESTAPIPassword" placeholder="RESTAPIPassword"
+            formControlName="restapipassword">
+          <label for="RESTAPIPassword">REST API Passwort</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="checkConnectionSave">
+          <label class="form-check-label" for="checkConnectionSave">
+            Verbindungseinstellungen speichern
+          </label>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary">Verbinden</button>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>
