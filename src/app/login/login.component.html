@@ -1,8 +1,9 @@
 <div class="m-5">
   <h2>Login</h2>
+  <hr>
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <div class="row">
-      <div class="col-4">
+      <div class="col-md-6 col-lg-4 col-sm-6">
         <div>
           <select class="form-select mb-3" formControlName="pxdatabase">
             <option value="">Datenbank auswählen</option>
@@ -31,7 +32,7 @@
                 VOL
               </label>
             </div>
-            (Es wird ausschliesslich volumenbasierte Abrechnung unterstützt!)
+            (Ausschliesslich volumenbasierte Abrechnung möglich!)
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="checkLoginSave">
@@ -41,6 +42,7 @@
           </div>
           <div>
             <button type="submit" class="btn btn-primary">Login</button>
+            <button type="" class="btn btn-primary" (click)="logout()">Abbrechen</button>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { PxDatenbank, PxDatenbankService, PxLoginService, PxLogin, PxHash } from '@proffix/restapi-angular-library';
 import { Observable } from 'rxjs';
 import { ToastService } from '../services/toast.service';
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private databaseService: PxDatenbankService,
     private loginService: PxLoginService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +45,8 @@ export class LoginComponent implements OnInit {
         next: (isValid) => {
           if (isValid) {
             this.successToast();
+            this.showError = false;
+            this.router.navigateByUrl('/debugger');
             console.log(login);
           }
         },
@@ -51,6 +55,11 @@ export class LoginComponent implements OnInit {
           console.log(error);
         }
       })
+  }
+
+  logout(): void {
+    this.loginService.doLogout();
+    this.router.navigateByUrl('/connection');
   }
 
   public getDatabases(): Observable<PxDatenbank[]> {

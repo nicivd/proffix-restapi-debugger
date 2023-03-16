@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PxConnectionSettingsService, PxConnectionSettings, PxHash, PxInfoService } from '@proffix/restapi-angular-library';
 import { Router } from '@angular/router';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-connection',
@@ -18,6 +19,7 @@ export class ConnectionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private infoService: PxInfoService,
     private router: Router,
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -47,6 +49,7 @@ export class ConnectionComponent implements OnInit {
       .subscribe({
         next: (isValid) => {
           if (isValid) {
+            this.successToast();
             this.router.navigateByUrl('/login')
           }
         },
@@ -55,5 +58,9 @@ export class ConnectionComponent implements OnInit {
           console.log(error);
         }
       })
+  }
+
+  public successToast(): void {
+    this.toastService.show('Verbindung erfolgreich!', { classname: 'bg-success text-light', delay: 6000 });
   }
 }
