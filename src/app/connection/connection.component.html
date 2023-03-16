@@ -5,17 +5,17 @@
       <div class="col-4">
         <div class="form-floating mb-3">
           <input type="url" class="form-control" id="RESTAPIInput" placeholder="http://placeholder.com"
-            formControlName="restapiurl">
+            formControlName="restapiurl" maxlength="50">
           <label for="RESTAPIInput">REST API URL</label>
           <p>z.B.: https://restapi.com/pxapi/v4</p>
         </div>
         <div class="form-floating">
           <input type="password" class="form-control" id="RESTAPIPassword" placeholder="RESTAPIPassword"
-            formControlName="restapipassword">
+            formControlName="restapipassword" maxlength="20">
           <label for="RESTAPIPassword">REST API Passwort</label>
         </div>
-        <div *ngIf="showError">
-          <p>Verbindungseinstellungen falsch oder fehlerhaft!</p>
+        <div *ngIf="showError" class="text-danger">
+          <p>Verbindungseinstellungen falsch oder nicht erreichbar!</p>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="checkConnectionSave">

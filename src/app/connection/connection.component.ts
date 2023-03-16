@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PxConnectionSettingsService, PxConnectionSettings, PxHash, PxHttpService, PxInfoService } from '@proffix/restapi-angular-library';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PxConnectionSettingsService, PxConnectionSettings, PxHash, PxInfoService } from '@proffix/restapi-angular-library';
 import { Router } from '@angular/router';
-import { AppConfiguration } from '../app.configuration';
 
 @Component({
   selector: 'app-connection',
@@ -13,15 +12,12 @@ export class ConnectionComponent implements OnInit {
 
   restapiForm!: FormGroup;
   showError: boolean = false;
-  //restApiFormSubmitted = false;
 
   constructor(
     private connectionSettingsService: PxConnectionSettingsService,
-    private httpService: PxHttpService,
     private formBuilder: FormBuilder,
     private infoService: PxInfoService,
     private router: Router,
-    private appconfig: AppConfiguration
   ) { }
 
   ngOnInit(): void {
@@ -31,13 +27,19 @@ export class ConnectionComponent implements OnInit {
     })
   }
 
+  get f(): { [key: string]: AbstractControl } {
+    return this.restapiForm.controls;
+  }
+
   public connectToRESTAPI(): void {
-    let connectionSettings: PxConnectionSettings = {
-      WebserviceUrl: this.restapiForm.value.restapiurl,
-      WebservicePasswortHash: PxHash.sha256(this.restapiForm.value.restapipassword)
-    };
-    this.connectionSettingsService.save(connectionSettings);
-    this.isConnectionValid();
+    if (this.restapiForm.valid) {
+      let connectionSettings: PxConnectionSettings = {
+        WebserviceUrl: this.restapiForm.value.restapiurl,
+        WebservicePasswortHash: PxHash.sha256(this.restapiForm.value.restapipassword)
+      };
+      this.connectionSettingsService.save(connectionSettings);
+      this.isConnectionValid();
+    }
   }
 
   public isConnectionValid(): void {
@@ -48,12 +50,10 @@ export class ConnectionComponent implements OnInit {
             this.router.navigateByUrl('/login')
           }
         },
-        error: (errorResponse) => {
-          if (errorResponse.Status === 404) {
-            this.showError = true;
-          }
+        error: (error) => {
+          this.showError = true;
+          console.log(error);
         }
       })
   }
-
 }

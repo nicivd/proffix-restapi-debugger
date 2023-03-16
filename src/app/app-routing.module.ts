@@ -6,7 +6,9 @@ import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
-    path: '', component: ConnectionComponent
+    path: '',
+    redirectTo: '/connection',
+    pathMatch: 'full'
   },
   {
     path: 'connection', component: ConnectionComponent
@@ -17,9 +19,8 @@ const routes: Routes = [
   {
     path: 'debugger', component: DebuggerComponent
   },
-  {
-    path: '**', component: ConnectionComponent
-  }
+
+  { path: '**', redirectTo: 'connection', pathMatch: 'full' }
 ];
 
 @NgModule({
