@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PxDatenbank, PxDatenbankService, PxLoginService, PxLogin, PxHash } from '@proffix/restapi-angular-library';
 import { Observable } from 'rxjs';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private databaseService: PxDatenbankService,
-    private loginService: PxLoginService
+    private loginService: PxLoginService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +42,7 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (isValid) => {
           if (isValid) {
+            this.successToast();
             console.log(login);
           }
         },
@@ -63,5 +66,9 @@ export class LoginComponent implements OnInit {
         console.log(this.databaseList);
       }
     })
+  }
+
+  public successToast(): void {
+    this.toastService.show('Login erfolgreich!', { classname: 'bg-success text-light', delay: 6000 });
   }
 }

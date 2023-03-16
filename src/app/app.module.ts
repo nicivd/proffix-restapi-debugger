@@ -11,6 +11,7 @@ import { DebuggerComponent } from './debugger/debugger.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { PxRestApiModule, PxConfiguration } from '@proffix/restapi-angular-library';
 import { AppConfiguration } from './app.configuration';
+import { ToastComponent } from './shared/toast/toast.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AppConfiguration } from './app.configuration';
     ConnectionComponent,
     LoginComponent,
     DebuggerComponent,
-    NavbarComponent
+    NavbarComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
