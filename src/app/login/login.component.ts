@@ -14,6 +14,9 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   showError: boolean = false;
+  showDatabaseError: boolean = false;
+  showUsernameError: boolean = false;
+  showPasswordError: boolean = false;
 
   databaseList: PxDatenbank[] = [];
 
@@ -35,26 +38,43 @@ export class LoginComponent implements OnInit {
   }
 
   public login(): void {
-    let login: PxLogin = {
-      Datenbank: { Name: this.loginForm.value.pxdatabase },
-      Benutzer: this.loginForm.value.pxusername,
-      Passwort: PxHash.sha256(this.loginForm.value.pxuserpassword)
-    };
-    this.loginService.doLogin(login, false)
-      .subscribe({
-        next: (isValid) => {
-          if (isValid) {
-            this.successToast();
-            this.showError = false;
-            this.router.navigateByUrl('/debugger');
-            console.log(login);
+    if (this.loginForm.valid) {
+      this.showDatabaseError = false;
+      this.showUsernameError = false;
+      this.showPasswordError = false;
+      let login: PxLogin = {
+        Datenbank: { Name: this.loginForm.value.pxdatabase },
+        Benutzer: this.loginForm.value.pxusername,
+        Passwort: PxHash.sha256(this.loginForm.value.pxuserpassword)
+      };
+      this.loginService.doLogin(login, false)
+        .subscribe({
+          next: (isValid) => {
+            if (isValid) {
+              this.successToast();
+              this.showError = false;
+              this.router.navigateByUrl('/debugger');
+              console.log(login);
+            }
+
+          },
+          error: (error) => {
+            this.showError = true;
+            console.log(error);
           }
-        },
-        error: (error) => {
-          this.showError = true;
-          console.log(error);
-        }
-      })
+        })
+    }
+    else {
+      if (this.loginForm.value.pxdatabase === "") {
+        this.showDatabaseError = true;
+      }
+      if (this.loginForm.value.pxusername === "") {
+        this.showUsernameError = true;
+      }
+      if (this.loginForm.value.pxuserpassword === "") {
+        this.showPasswordError = true;
+      }
+    }
   }
 
   logout(): void {

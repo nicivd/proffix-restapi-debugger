@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PxConnectionSettingsService, PxConnectionSettings, PxHash, PxInfoService } from '@proffix/restapi-angular-library';
 import { Router } from '@angular/router';
 import { ToastService } from '../services/toast.service';
@@ -13,6 +13,8 @@ export class ConnectionComponent implements OnInit {
 
   restapiForm!: FormGroup;
   showError: boolean = false;
+  showURLError: boolean = false;
+  showPasswordError: boolean = false;
 
   constructor(
     private connectionSettingsService: PxConnectionSettingsService,
@@ -26,21 +28,34 @@ export class ConnectionComponent implements OnInit {
     this.restapiForm = this.formBuilder.group({
       restapiurl: ['', Validators.required],
       restapipassword: ['', Validators.required]
-    })
+    });
+    // this.restapiurl = new FormControl('', [
+    //   Validators.required,
+    // ])
   }
 
-  get f(): { [key: string]: AbstractControl } {
-    return this.restapiForm.controls;
-  }
+  // get f(): { [key: string]: AbstractControl } {
+  //   return this.restapiForm.controls;
+  // }
 
   public connectToRESTAPI(): void {
     if (this.restapiForm.valid) {
+      this.showURLError = false;
+      this.showPasswordError = false;
       let connectionSettings: PxConnectionSettings = {
         WebserviceUrl: this.restapiForm.value.restapiurl,
         WebservicePasswortHash: PxHash.sha256(this.restapiForm.value.restapipassword)
       };
       this.connectionSettingsService.save(connectionSettings);
       this.isConnectionValid();
+    }
+    else if (this.restapiForm.touched) {
+      if (this.restapiForm.value.restapiurl === "") {
+        this.showURLError = true;
+      }
+      if (this.restapiForm.value.restapipassword === "") {
+        this.showPasswordError = true;
+      }
     }
   }
 

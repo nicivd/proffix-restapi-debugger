@@ -11,15 +11,27 @@
               <button ngbDropdownItem>{{database.Bezeichnung}} ({{database.Name}})</button>
             </option>
           </select>
+          <div *ngIf="showDatabaseError">
+            <div class="text-danger">Datenbank ist erforderlich.</div>
+          </div>
+          <div *ngIf="databaseList.length <= 0">
+            <div class="text-danger">Keine Datenbank vorhanden.</div>
+          </div>
           <div class="form-floating mb-3">
             <input type="url" class="form-control" id="usernameInput" placeholder="username"
               formControlName="pxusername" maxlength="50">
             <label for="usernameInput">Proffix Benutzername</label>
           </div>
+          <div *ngIf="showUsernameError">
+            <div class="text-danger">Benutzername ist erforderlich.</div>
+          </div>
           <div class="form-floating">
             <input type="password" class="form-control" id="userPassword" placeholder="userPassword"
               formControlName="pxuserpassword" maxlength="20">
             <label for="userPassword">Proffix Passwort</label>
+          </div>
+          <div *ngIf="showPasswordError">
+            <div class="text-danger">Passwort ist erforderlich.</div>
           </div>
           <div *ngIf="showError" class="text-danger">
             <p>Benutzername oder Passwort falsch!</p>
@@ -40,8 +52,8 @@
               Logindaten speichern
             </label>
           </div>
-          <div>
-            <button type="submit" class="btn btn-primary">Login</button>
+          <div class="m-2">
+            <button style="margin-right: 2%" type="submit" class="btn btn-primary">Login</button>
             <button type="" class="btn btn-primary" (click)="logout()">Abbrechen</button>
           </div>
         </div>
