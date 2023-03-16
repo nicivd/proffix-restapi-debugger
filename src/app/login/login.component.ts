@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PxDatenbank } from '@proffix/restapi-angular-library';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,4 +14,16 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  // public getDatabases(): Observable<PxDatenbank[]> {
+  //    return this.pxdatabaseService.getAll();
+  // }
+
+  // public loadDatabases(): void {
+  //   this.getDatabases().subscribe({
+  //     next: (db) => {
+  //       console.log(db);
+  //     }
+  //   })
+  // }
 }

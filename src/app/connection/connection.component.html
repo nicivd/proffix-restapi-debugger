@@ -14,6 +14,9 @@
             formControlName="restapipassword">
           <label for="RESTAPIPassword">REST API Passwort</label>
         </div>
+        <div *ngIf="showError">
+          <p>Verbindungseinstellungen falsch oder fehlerhaft!</p>
+        </div>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="checkConnectionSave">
           <label class="form-check-label" for="checkConnectionSave">
