@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  logout(): void {
+  public logout(): void {
     this.pxloginService.doLogout();
     this.router.navigateByUrl('/connection');
   }

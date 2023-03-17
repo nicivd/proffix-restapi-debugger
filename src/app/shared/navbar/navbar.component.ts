@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { PxLocalStorageService, PxLoginService } from '@proffix/restapi-angular-library';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +15,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     private pxloginService: PxLoginService,
     private pxlocalStorageService: PxLocalStorageService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +37,7 @@ export class NavbarComponent implements OnInit {
         next: () => {
           this.pxloginService.removeAutoLogin();
           this.pxlocalStorageService.remove('Proffix.CurrentUser');
+          this.toastService.show('Sie werden ausgeloggt.', { classname: 'bg-danger text-light', delay: 6000 });
           this.router.navigateByUrl('/login');
         },
         error: (error) => {
