@@ -17,9 +17,9 @@ export class ConnectionComponent implements OnInit {
   showPasswordError: boolean = false;
 
   constructor(
-    private connectionSettingsService: PxConnectionSettingsService,
+    private pxconnectionSettingsService: PxConnectionSettingsService,
     private formBuilder: FormBuilder,
-    private infoService: PxInfoService,
+    private pxinfoService: PxInfoService,
     private router: Router,
     private toastService: ToastService
   ) { }
@@ -46,7 +46,7 @@ export class ConnectionComponent implements OnInit {
         WebserviceUrl: this.restapiForm.value.restapiurl,
         WebservicePasswortHash: PxHash.sha256(this.restapiForm.value.restapipassword)
       };
-      this.connectionSettingsService.save(connectionSettings);
+      this.pxconnectionSettingsService.save(connectionSettings);
       this.isConnectionValid();
     }
     else if (this.restapiForm.touched) {
@@ -60,10 +60,10 @@ export class ConnectionComponent implements OnInit {
   }
 
   public isConnectionValid(): void {
-    this.infoService.isAppCompatible()
+    this.pxinfoService.isAppCompatible()
       .subscribe({
-        next: (isValid) => {
-          if (isValid) {
+        next: (connection) => {
+          if (connection) {
             this.successToast();
             this.router.navigateByUrl('/login')
           }

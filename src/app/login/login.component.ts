@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PxDatenbank, PxDatenbankService, PxLoginService, PxLogin, PxHash } from '@proffix/restapi-angular-library';
+import { PxDatenbank, PxDatenbankService, PxLoginService, PxLogin, PxHash, PxLocalStorageService } from '@proffix/restapi-angular-library';
 import { Observable } from 'rxjs';
 import { ToastService } from '../services/toast.service';
 
@@ -22,17 +22,19 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private databaseService: PxDatenbankService,
-    private loginService: PxLoginService,
+    private pxdatabaseService: PxDatenbankService,
+    private pxloginService: PxLoginService,
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
+    private pxlogalStorageService: PxLocalStorageService
   ) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       pxdatabase: ['', Validators.required],
       pxusername: ['', Validators.required],
-      pxuserpassword: ['', Validators.required]
+      pxuserpassword: ['', Validators.required],
+      checkautologin: [false]
     })
     this.loadDatabases();
   }
@@ -47,20 +49,24 @@ export class LoginComponent implements OnInit {
         Benutzer: this.loginForm.value.pxusername,
         Passwort: PxHash.sha256(this.loginForm.value.pxuserpassword)
       };
-      this.loginService.doLogin(login, false)
+      this.pxloginService.doLogin(login, this.loginForm.value.checkautologin)
         .subscribe({
-          next: (isValid) => {
-            if (isValid) {
+          next: (login) => {
+            if (login) {
               this.successToast();
               this.showError = false;
-              this.router.navigateByUrl('/debugger');
               console.log(login);
+              if (this.loginForm.value.checkautologin) {
+                this.pxlogalStorageService.set('PROFFIX.CurrentUser', login.Benutzer);
+              }
             }
-
           },
           error: (error) => {
             this.showError = true;
             console.log(error);
+          },
+          complete: () => {
+            this.router.navigateByUrl('/debugger');
           }
         })
     }
@@ -78,12 +84,12 @@ export class LoginComponent implements OnInit {
   }
 
   logout(): void {
-    this.loginService.doLogout();
+    this.pxloginService.doLogout();
     this.router.navigateByUrl('/connection');
   }
 
   public getDatabases(): Observable<PxDatenbank[]> {
-    return this.databaseService.getAll();
+    return this.pxdatabaseService.getAll();
   }
 
   public loadDatabases(): void {
