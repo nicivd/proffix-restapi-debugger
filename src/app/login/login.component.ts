@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     private pxloginService: PxLoginService,
     private toastService: ToastService,
     private router: Router,
-    private pxlogalStorageService: PxLocalStorageService
+    private pxlogalStorageService: PxLocalStorageService,
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       pxusername: ['', Validators.required],
       pxuserpassword: ['', Validators.required],
       checkautologin: [false]
-    })
+    });
     this.loadDatabases();
   }
 
