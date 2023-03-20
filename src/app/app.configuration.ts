@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PxConfiguration, PxVersion } from '@proffix/restapi-angular-library';
+import { PxConfiguration, PxVersion } from 'projects/lib/src/public-api';
 
 @Injectable()
 export class AppConfiguration extends PxConfiguration {

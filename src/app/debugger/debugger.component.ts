@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PxConnectionSettingsService, PxHttpService, PxLocalStorageService, PxLoginService, PxUrlFormatter } from '@proffix/restapi-angular-library';
+import { PxConnectionSettingsService, PxHttpService, PxLocalStorageService, PxLoginService, PxUrlFormatter } from 'projects/lib/src/public-api';
 import { HttpMethod } from '../models/http-method';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../services/toast.service';

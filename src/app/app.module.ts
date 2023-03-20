@@ -9,7 +9,7 @@ import { ConnectionComponent } from './connection/connection.component';
 import { LoginComponent } from './login/login.component';
 import { DebuggerComponent } from './debugger/debugger.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
-import { PxRestApiModule, PxConfiguration } from '@proffix/restapi-angular-library';
+import { PxRestApiModule, PxConfiguration } from 'projects/lib/src/public-api';
 import { AppConfiguration } from './app.configuration';
 import { ToastComponent } from './shared/toast/toast.component';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';

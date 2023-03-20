@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { PxLocalStorageService, PxLoginService } from '@proffix/restapi-angular-library';
+import { PxLocalStorageService, PxLoginService } from 'projects/lib/src/public-api';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({

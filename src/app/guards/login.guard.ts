@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { PxLoginService } from '@proffix/restapi-angular-library';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { PxLoginService } from 'projects/lib/src/public-api';
 import { catchError, EMPTY, map, Observable } from 'rxjs';
-import { ToastService } from '../services/toast.service';
 
 @Injectable({
   providedIn: 'root'

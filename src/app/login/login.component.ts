@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PxDatenbank, PxDatenbankService, PxLoginService, PxLogin, PxHash, PxLocalStorageService } from '@proffix/restapi-angular-library';
+import { PxDatenbank, PxDatenbankService, PxLoginService, PxLogin, PxHash, PxLocalStorageService } from 'projects/lib/src/public-api';
 import { Observable } from 'rxjs';
 import { ToastService } from '../services/toast.service';
 
