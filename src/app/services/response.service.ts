@@ -22,8 +22,9 @@ export class ResponseService {
     if (requestBody) {
       const responseInfo: Response = { color: color, httpMethod: httpMethod, request: request, responseBody: response, requestBody: requestBody };
       this.responseList.unshift(responseInfo);
+    } else {
+      this.responseList.unshift(responseInfo);
     }
-    this.responseList.unshift(responseInfo);
     this.responseSubject.next(this.responseList);
     console.log(this.responseList);
   }

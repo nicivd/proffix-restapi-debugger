@@ -94,7 +94,7 @@ export class DebuggerComponent implements OnInit {
         break;
       }
       case "PATCH": {
-        //this.sendPatchRequest();
+        this.sendPatchRequest();
         console.log("PATCH");
         break;
       }
@@ -124,7 +124,7 @@ export class DebuggerComponent implements OnInit {
     this.pxhttpService.post(this.debuggerForm.value.requestInput, requestBody)
       .subscribe({
         next: (response) => {
-          this.responseService.addToLog(0, "POST", "", response, requestBody);
+          this.responseService.addToLog(0, "POST", this.debuggerForm.value.requestInput, response, requestBody);
           console.log(response, requestBody);
         },
         error: (error) => {
@@ -151,22 +151,21 @@ export class DebuggerComponent implements OnInit {
       })
   }
 
-  // TODO
-
-  // public sendPatchRequest(): void {
-  //   let request = PxUrlFormatter.getAbsolutUrl(this.debuggerForm.value.requestInput, this.connectionService.load().WebserviceUrl);
-  //   let requestBody = JSON.parse(this.debuggerForm.value.requestBody);
-  //   console.log(request);
-  //   this.httpClient.patch<void>(request, requestBody)
-  //     .subscribe({
-  //       next: (val) => {
-  //         console.log(val);
-  //       },
-  //       error: (error) => {
-  //         console.log(error);
-  //       }
-  //     })
-  // }
+  public sendPatchRequest(): void {
+    let requestBody = JSON.parse(this.debuggerForm.value.requestBody);
+    this.pxhttpService.patch(this.debuggerForm.value.requestInput, requestBody)
+      .subscribe({
+        next: (response) => {
+          this.responseService.addToLog(0, "PATCH", this.debuggerForm.value.requestInput, response!, requestBody);
+          console.log(response);
+        },
+        error: (error) => {
+          if (!this.pxloginService.isAutoLoginActive) {
+            console.log(error);
+          }
+        }
+      })
+  }
 
   public sendDeleteRequest(): void {
     this.pxhttpService.delete(this.debuggerForm.value.requestInput)

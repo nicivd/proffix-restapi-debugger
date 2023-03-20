@@ -2,6 +2,6 @@ export interface Response {
   color: number,
   httpMethod: string,
   request: string,
-  responseBody: any,
+  responseBody?: any,
   requestBody?: any
 }
