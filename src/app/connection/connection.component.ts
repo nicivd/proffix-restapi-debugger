@@ -70,7 +70,9 @@ export class ConnectionComponent implements OnInit {
         },
         error: (error) => {
           this.showError = true;
-          console.log(error);
+          if (error.error?.Message) {
+            this.toastService.show(error.error.Message, { classname: 'bg-danger text-light', delay: 6000 });
+          }
         }
       })
   }

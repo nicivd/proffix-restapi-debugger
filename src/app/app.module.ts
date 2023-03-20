@@ -12,6 +12,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { PxRestApiModule, PxConfiguration } from '@proffix/restapi-angular-library';
 import { AppConfiguration } from './app.configuration';
 import { ToastComponent } from './shared/toast/toast.component';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { ToastComponent } from './shared/toast/toast.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    PxRestApiModule.forRoot()
+    PxRestApiModule.forRoot(),
+    NgxJsonViewerModule
   ],
   providers: [
     AppConfiguration,

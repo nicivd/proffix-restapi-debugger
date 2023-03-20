@@ -61,9 +61,14 @@ export class LoginComponent implements OnInit {
               }
             }
           },
-          error: (error) => {
+          error: (errorMessage) => {
             this.showError = true;
-            console.log(error);
+            if (errorMessage.error?.Message) {
+              this.toastService.show(errorMessage.error.Message, { classname: 'bg-danger text-light', delay: 5000 });
+            }
+            if (errorMessage.Status === 403) {
+              this.toastService.show('Benutzername oder Passwort falsch', { classname: 'bg-danger text-light', delay: 5000 });
+            }
           },
           complete: () => {
             this.router.navigateByUrl('/debugger');
@@ -98,7 +103,9 @@ export class LoginComponent implements OnInit {
         databases.forEach(database => {
           this.databaseList.push(database);
         })
-        console.log(this.databaseList);
+      },
+      error: (error) => {
+        this.toastService.show('Keine Datenbank vorhanden', { classname: 'bg-danger text-light', delay: 5000 });
       }
     })
   }

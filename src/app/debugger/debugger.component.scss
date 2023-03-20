@@ -1,0 +1,21 @@
+::ng-deep .accordion-button:not(.collapsed) {
+  background-color: #dff0d8 !important;
+  color: black;
+}
+
+::ng-deep .accordion-button {
+  background-color: #dff0d8 !important;
+  color: black;
+}
+
+::ng-deep .accordion-body {
+  background-color: white !important;
+}
+
+.positive {
+  background-color: blue !important;
+}
+
+.negative {
+  background-color: red !important;
+}

@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { PxConnectionSettingsService, PxHttpService, PxLocalStorageService, PxLoginService, PxUrlFormatter } from '@proffix/restapi-angular-library';
 import { HttpMethod } from '../models/http-method';
 import { HttpClient } from '@angular/common/http';
-import { Patch } from '../models/patch';
 import { ToastService } from '../services/toast.service';
-import { catchError, EMPTY, map } from 'rxjs';
+import { ResponseService } from '../services/response.service';
+import JSONFormatter from 'json-formatter-js'
+import { Response } from '../models/response';
 
 
 @Component({
@@ -18,6 +19,10 @@ export class DebuggerComponent implements OnInit {
 
   debuggerForm!: FormGroup;
   showReqBody: boolean = false;
+  isCollapsed = true;
+  isCollapsed2 = true;
+
+  responseList = new Array<Response>();
 
   httpMethodList: HttpMethod[] = [
     { id: 0, name: "GET" },
@@ -33,9 +38,8 @@ export class DebuggerComponent implements OnInit {
     private pxhttpService: PxHttpService,
     private router: Router,
     private toastService: ToastService,
+    private responseService: ResponseService,
     private httpClient: HttpClient,
-    private connectionService: PxConnectionSettingsService,
-    private pxlogalStorageService: PxLocalStorageService
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +49,15 @@ export class DebuggerComponent implements OnInit {
       requestBody: ['']
     })
     this.checkLogin();
+    this.getResponseList();
+  }
+
+  public getResponseList(): void {
+    this.responseService.getResponseObservable()
+      .subscribe(
+        (response: Response[]) => {
+          this.responseList = response;
+        });
   }
 
   public checkLogin(): void {
@@ -87,23 +100,22 @@ export class DebuggerComponent implements OnInit {
       }
       case "DELETE": {
         this.sendDeleteRequest();
-        console.log("DELETE");
         break;
       }
     }
   }
 
   public sendGetRequest(): void {
-    this.pxhttpService.get(this.debuggerForm.value.requestInput)
+    this.pxhttpService.get(this.debuggerForm.value.requestInput, { observe: 'response' })
       .subscribe({
         next: (response) => {
-          console.log(response);
+          this.responseService.addToLog(0, "GET", this.debuggerForm.value.requestInput, response);
         },
         error: (error) => {
           if (!this.pxloginService.isAutoLoginActive) {
             console.log(error);
           }
-        }
+        },
       })
   }
 
@@ -112,6 +124,7 @@ export class DebuggerComponent implements OnInit {
     this.pxhttpService.post(this.debuggerForm.value.requestInput, requestBody)
       .subscribe({
         next: (response) => {
+          this.responseService.addToLog(0, "POST", "", response, requestBody);
           console.log(response, requestBody);
         },
         error: (error) => {
@@ -127,6 +140,7 @@ export class DebuggerComponent implements OnInit {
     this.pxhttpService.put(this.debuggerForm.value.requestInput, requestBody)
       .subscribe({
         next: (response) => {
+          this.responseService.addToLog(0, "PUT", "", response, requestBody);
           console.log(response);
         },
         error: (error) => {
@@ -158,6 +172,7 @@ export class DebuggerComponent implements OnInit {
     this.pxhttpService.delete(this.debuggerForm.value.requestInput)
       .subscribe({
         next: (response) => {
+          this.responseService.addToLog(0, "DELETE", this.debuggerForm.value.requestInput, "Adresse wurde gelöscht!");
           console.log(response);
         },
         error: (error) => {

@@ -28,4 +28,40 @@
   </form>
   <h2>Response Log</h2>
   <hr>
+  <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+    <ngb-panel class="m-3" [title]="response.httpMethod + '/' + response.request" *ngFor="let response of responseList"
+      [ngClass]="{
+            'positive' : response.color <= 0,
+            'negative' : response.color > 0
+         }">
+      <ng-template ngbPanelContent>
+        <!-- <pre><p>{{response | json}}</p></pre> -->
+        <button type="button" class="btn btn-outline-primary ms-2 mb-3" (click)="isCollapsed = ! isCollapsed"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+          Response Body (Antwort)
+        </button>
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+          <div class="card">
+            <div class="card-body"><ngx-json-viewer [json]="response.responseBody"
+                style="--ngx-json-null:none; --ngx-json-null-bg:none" [expanded]="false"></ngx-json-viewer></div>
+          </div>
+        </div>
+        <div>
+          <button *ngIf="response.requestBody || !undefined" type="button" class="btn btn-outline-primary ms-2 mb-3"
+            (click)="isCollapsed2 = ! isCollapsed2" [attr.aria-expanded]="!isCollapsed2"
+            aria-controls="collapseExample">
+            Request Body (Anfrage)
+          </button>
+          <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
+            <div class="card">
+              <div class="card-body"><ngx-json-viewer [json]="response.requestBody"
+                  style="--ngx-json-null:none; --ngx-json-null-bg:none" [expanded]="false"></ngx-json-viewer></div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+  <div>
+  </div>
 </div>
