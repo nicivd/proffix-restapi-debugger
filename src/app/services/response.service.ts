@@ -17,12 +17,12 @@ export class ResponseService {
     return this.responseSubject.asObservable();
   }
 
-  public addToLog(color: number, httpMethod: string, request: string, response: any, requestBody?: any): void {
-    const responseInfo: Response = { color: color, httpMethod: httpMethod, request: request, responseBody: response };
+  public addToLog(color: number, httpMethod: string, statuscode: number, type: string, request: string, response: any, requestBody?: any): void {
     if (requestBody) {
-      const responseInfo: Response = { color: color, httpMethod: httpMethod, request: request, responseBody: response, requestBody: requestBody };
+      const responseInfo: Response = { color: color, httpMethod: httpMethod, statuscode: statuscode, type: type, request: request, responseBody: response, requestBody: requestBody };
       this.responseList.unshift(responseInfo);
     } else {
+      const responseInfo: Response = { color: color, httpMethod: httpMethod, statuscode: statuscode, type: type, request: request, responseBody: response };
       this.responseList.unshift(responseInfo);
     }
     this.responseSubject.next(this.responseList);

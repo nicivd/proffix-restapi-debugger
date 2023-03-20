@@ -34,7 +34,7 @@
     </button>
   </span>
   <hr>
-  <div class="card" *ngFor="let response of responseList">
+  <div class="card m-2" *ngFor="let response of responseList">
     <div class="card-header" [ngClass]="{
             'positive' : response.color <= 0,
             'negative' : response.color > 0
@@ -48,19 +48,19 @@
       </h5>
     </div>
     <div class="card-body">
-      <!-- <pre><p>{{response | json}}</p></pre> -->
+      <p><b> HTTP Statuscode:</b> {{response.statuscode}} {{response.type}}</p>
       <button type="button" class="btn btn-outline-primary ms-2 mb-3" (click)="isCollapsed = ! isCollapsed"
         [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
         Response Body (Antwort)
       </button>
-      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="mb-2">
         <div class="card">
           <div class="card-body"><ngx-json-viewer [json]="response.responseBody"
               style="--ngx-json-null:none; --ngx-json-null-bg:none" [expanded]="false"></ngx-json-viewer></div>
         </div>
       </div>
       <div>
-        <button *ngIf="response.requestBody || !undefined" type="button" class="btn btn-outline-primary ms-2 mb-3"
+        <button *ngIf="response.requestBody || !undefined" type="button" class="btn btn-outline-primary ms-2 mr-2"
           (click)="isCollapsed2 = ! isCollapsed2" [attr.aria-expanded]="!isCollapsed2" aria-controls="collapseExample">
           Request Body (Anfrage)
         </button>
