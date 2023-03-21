@@ -3,14 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavigationStart, Router } from '@angular/router';
 import { PxHttpService, PxLoginService } from 'projects/lib/src/public-api';
 import { HttpMethod } from '../models/http-method';
-import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../services/toast.service';
 import { ResponseService } from '../services/response.service';
 import { Response } from '../models/response';
 import { Subject, takeUntil } from 'rxjs';
 import { TimerService } from '../services/timer.service';
-
-
+import { RequestInterceptor } from '../interceptors/request.interceptor';
 
 @Component({
   selector: 'app-debugger',
@@ -28,6 +26,8 @@ export class DebuggerComponent implements OnInit, OnDestroy {
   responseList = new Array<Response>();
   unsubscribe = new Subject<void>();
 
+  pxsessionID = RequestInterceptor.pxSessionId;
+
   httpMethodList: HttpMethod[] = [
     { id: 0, name: "GET" },
     { id: 1, name: "POST" },
@@ -44,7 +44,6 @@ export class DebuggerComponent implements OnInit, OnDestroy {
     private toastService: ToastService,
     private responseService: ResponseService,
     private timerService: TimerService,
-    private httpClient: HttpClient,
   ) { }
 
   ngOnInit(): void {
