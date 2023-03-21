@@ -3,12 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavigationStart, Router } from '@angular/router';
 import { PxHttpService, PxLoginService } from 'projects/lib/src/public-api';
 import { HttpMethod } from '../models/http-method';
-import { HttpClient, HttpErrorResponse, HttpResponse, HttpHeaderResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../services/toast.service';
 import { ResponseService } from '../services/response.service';
 import { Response } from '../models/response';
-import { PxError } from 'projects/lib/src/public-api';
-import { map, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { TimerService } from '../services/timer.service';
 
 

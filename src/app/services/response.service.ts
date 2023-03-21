@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Response } from '../models/response';
-
+import { PxConnectionSettingsService } from 'projects/lib/src/public-api';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,7 @@ export class ResponseService {
   reqBody: any;
 
   constructor(
+    private pxConnService: PxConnectionSettingsService
   ) { }
 
   public getResponseObservable(): Observable<Array<Response>> {
@@ -24,11 +25,13 @@ export class ResponseService {
   }
 
   public getURL(request: string): void {
+    this.getBaseURL();
     this.formattedReq = request.slice(this.url.length);
   }
 
-  public getBaseURL(url: string): void {
-    this.url = url
+  public getBaseURL(): void {
+    let conn = this.pxConnService.load();
+    this.url = conn.WebserviceUrl;
   }
 
   public getRequestBody(body: any): void {
