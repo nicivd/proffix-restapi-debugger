@@ -13,6 +13,8 @@ import { PxRestApiModule, PxConfiguration } from 'projects/lib/src/public-api';
 import { AppConfiguration } from './app.configuration';
 import { ToastComponent } from './shared/toast/toast.component';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RequestInterceptor } from './interceptors/request.interceptor';
 
 
 @NgModule({
@@ -35,7 +37,8 @@ import { NgxJsonViewerModule } from 'ngx-json-viewer';
   ],
   providers: [
     AppConfiguration,
-    { provide: PxConfiguration, useExisting: AppConfiguration }
+    { provide: PxConfiguration, useExisting: AppConfiguration },
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

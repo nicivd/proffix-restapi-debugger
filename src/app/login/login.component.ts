@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { PxDatenbank, PxDatenbankService, PxLoginService, PxLogin, PxHash, PxLocalStorageService } from 'projects/lib/src/public-api';
 import { Observable } from 'rxjs';
 import { ToastService } from '../services/toast.service';
+import { ResponseService } from '../services/response.service';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
     private toastService: ToastService,
     private router: Router,
     private pxlogalStorageService: PxLocalStorageService,
+    private responseService: ResponseService
   ) { }
 
   ngOnInit(): void {
@@ -49,31 +51,35 @@ export class LoginComponent implements OnInit {
         Benutzer: this.loginForm.value.pxusername,
         Passwort: PxHash.sha256(this.loginForm.value.pxuserpassword)
       };
-      this.pxloginService.doLogin(login, this.loginForm.value.checkautologin)
-        .subscribe({
-          next: (login) => {
-            if (login) {
-              this.successToast();
-              this.showError = false;
-              console.log(login);
-              if (this.loginForm.value.checkautologin) {
-                this.pxlogalStorageService.set('PROFFIX.CurrentUser', login.Benutzer);
+      try {
+        this.pxloginService.doLogin(login, this.loginForm.value.checkautologin)
+          .subscribe({
+            next: (login) => {
+              if (login) {
+                this.successToast();
+                this.showError = false;
+                if (this.loginForm.value.checkautologin) {
+                  this.pxlogalStorageService.set('PROFFIX.CurrentUser', login.Benutzer);
+                }
               }
+            },
+            error: (errorMessage) => {
+              this.showError = true;
+              if (errorMessage.error?.Message) {
+                this.toastService.show(errorMessage.error.Message, { classname: 'bg-danger text-light', delay: 5000 });
+              }
+              if (errorMessage.Status === 403) {
+                this.toastService.show('Benutzername oder Passwort falsch', { classname: 'bg-danger text-light', delay: 5000 });
+              }
+            },
+            complete: () => {
+              this.responseService.resetList();
+              this.router.navigateByUrl('/debugger');
             }
-          },
-          error: (errorMessage) => {
-            this.showError = true;
-            if (errorMessage.error?.Message) {
-              this.toastService.show(errorMessage.error.Message, { classname: 'bg-danger text-light', delay: 5000 });
-            }
-            if (errorMessage.Status === 403) {
-              this.toastService.show('Benutzername oder Passwort falsch', { classname: 'bg-danger text-light', delay: 5000 });
-            }
-          },
-          complete: () => {
-            this.router.navigateByUrl('/debugger');
-          }
-        })
+          })
+      } catch (error) {
+        reportError(error);
+      }
     }
     else {
       if (this.loginForm.value.pxdatabase === "") {

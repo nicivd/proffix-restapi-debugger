@@ -4,7 +4,7 @@ export interface Response {
   request: string,
   duration: number,
   statuscode: number,
-  type: string,
-  responseBody?: any,
+  type: any,
   requestBody?: any
+  responseBody?: any,
 }

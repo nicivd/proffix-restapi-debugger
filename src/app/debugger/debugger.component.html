@@ -22,7 +22,9 @@
           </div>
         </div>
         <textarea *ngIf="showReqBody" class="form-control" formControlName="requestBody"
-          id="exampleFormControlTextarea1" rows="5"></textarea>
+          id="exampleFormControlTextarea1" rows="5" placeholder="Request Body...">
+        </textarea>
+        <p class="text-danger">{{errorMessage}}</p>
       </div>
     </div>
   </form>
@@ -59,8 +61,8 @@
     </div>
     <div class="card-body">
       <p><b> HTTP Statuscode:</b> {{response.statuscode}} {{response.type}}</p>
-      <button type="button" class="btn btn-outline-primary ms-2 mb-3" (click)="isCollapsed = ! isCollapsed"
-        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+      <button *ngIf="response.responseBody!==''" type="button" class="btn btn-outline-primary ms-2 mb-3"
+        (click)="isCollapsed = ! isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
         Response Body (Antwort)
       </button>
       <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="mb-2">
@@ -70,15 +72,17 @@
         </div>
       </div>
       <div>
-        <button *ngIf="!(response.httpMethod=='GET' || response.httpMethod=='DELETE')" type="button"
-          class="btn btn-outline-primary ms-2 mr-2" (click)="isCollapsed2 = ! isCollapsed2"
+        <button *ngIf="!(response.httpMethod=='GET' || response.httpMethod=='DELETE') || null || undefined"
+          type="button" class="btn btn-outline-primary ms-2 mr-2" (click)="isCollapsed2 = ! isCollapsed2"
           [attr.aria-expanded]="!isCollapsed2" aria-controls="collapseExample">
           Request Body (Anfrage)
         </button>
-        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
+        <div *ngIf="response.requestBody!==''" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
           <div class="card">
-            <div class="card-body"><ngx-json-viewer [json]="response.requestBody"
-                style="--ngx-json-null:none; --ngx-json-null-bg:none" [expanded]="false"></ngx-json-viewer></div>
+            <div class="card-body">
+              <ngx-json-viewer [json]="response.requestBody" style="--ngx-json-null-bg:none"
+                [expanded]="false"></ngx-json-viewer>
+            </div>
           </div>
         </div>
       </div>

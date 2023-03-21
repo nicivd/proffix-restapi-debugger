@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { PxConnectionSettingsService, PxConnectionSettings, PxHash, PxInfoService } from 'projects/lib/src/public-api';
 import { Router } from '@angular/router';
 import { ToastService } from '../services/toast.service';
+import { ResponseService } from '../services/response.service';
 
 @Component({
   selector: 'app-connection',
@@ -21,7 +22,8 @@ export class ConnectionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private pxinfoService: PxInfoService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private responseService: ResponseService
   ) { }
 
   ngOnInit(): void {
@@ -29,14 +31,7 @@ export class ConnectionComponent implements OnInit {
       restapiurl: ['', Validators.required],
       restapipassword: ['', Validators.required]
     });
-    // this.restapiurl = new FormControl('', [
-    //   Validators.required,
-    // ])
   }
-
-  // get f(): { [key: string]: AbstractControl } {
-  //   return this.restapiForm.controls;
-  // }
 
   public connectToRESTAPI(): void {
     if (this.restapiForm.valid) {
@@ -47,6 +42,7 @@ export class ConnectionComponent implements OnInit {
         WebservicePasswortHash: PxHash.sha256(this.restapiForm.value.restapipassword)
       };
       this.pxconnectionSettingsService.save(connectionSettings);
+      this.responseService.getBaseURL(connectionSettings.WebserviceUrl);
       this.isConnectionValid();
     }
     else if (this.restapiForm.touched) {
