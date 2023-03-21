@@ -39,13 +39,23 @@
             'positive' : response.color <= 0,
             'negative' : response.color > 0
          }">
-      <h5 class="card-title">{{response.httpMethod + '/' + response.request}}
-        <span style="float: right;">
-          <button type="button" class="btn btn-danger">
-            <i class="bi bi-trash"></i>
-            Löschen</button>
-        </span>
-      </h5>
+      <div class="container">
+        <div class="row">
+          <div class="col-9 mt-2">
+            <h5 class="card-title">{{response.httpMethod + '/' + response.request}}</h5>
+          </div>
+          <div class="col mt-2">
+            <p>Dauer: {{response.duration}}ms</p>
+          </div>
+          <div class="col  mt-1">
+            <span style="float: right;">
+              <button type="button" class="btn btn-danger">
+                <i class="bi bi-trash"></i>
+                Löschen</button>
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <p><b> HTTP Statuscode:</b> {{response.statuscode}} {{response.type}}</p>
@@ -60,8 +70,9 @@
         </div>
       </div>
       <div>
-        <button *ngIf="response.requestBody || !undefined" type="button" class="btn btn-outline-primary ms-2 mr-2"
-          (click)="isCollapsed2 = ! isCollapsed2" [attr.aria-expanded]="!isCollapsed2" aria-controls="collapseExample">
+        <button *ngIf="!(response.httpMethod=='GET' || response.httpMethod=='DELETE')" type="button"
+          class="btn btn-outline-primary ms-2 mr-2" (click)="isCollapsed2 = ! isCollapsed2"
+          [attr.aria-expanded]="!isCollapsed2" aria-controls="collapseExample">
           Request Body (Anfrage)
         </button>
         <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed2">

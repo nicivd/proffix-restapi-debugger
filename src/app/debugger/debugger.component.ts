@@ -9,6 +9,7 @@ import { ResponseService } from '../services/response.service';
 import { Response } from '../models/response';
 import { PxError } from 'projects/lib/src/public-api';
 import { map } from 'rxjs';
+import { TimerService } from '../services/timer.service';
 
 
 
@@ -41,6 +42,7 @@ export class DebuggerComponent implements OnInit {
     private router: Router,
     private toastService: ToastService,
     private responseService: ResponseService,
+    private timerService: TimerService,
     private httpClient: HttpClient,
   ) { }
 
@@ -97,7 +99,6 @@ export class DebuggerComponent implements OnInit {
       }
       case "PATCH": {
         this.sendPatchRequest();
-        console.log("PATCH");
         break;
       }
       case "DELETE": {
@@ -111,10 +112,11 @@ export class DebuggerComponent implements OnInit {
     let statuscode: number;
     let type: string;
     let errorList = new Array<PxError>();
+    this.timerService.setTimer();
     this.pxhttpService.get(this.debuggerForm.value.requestInput)
       .subscribe({
         next: (response) => {
-          this.responseService.addToLog(0, 'GET', 200, 'OK', this.debuggerForm.value.requestInput, response);
+          this.responseService.addToLog(0, 'GET', this.timerService.getTimer(), 200, 'OK', this.debuggerForm.value.requestInput, response);
         },
         error: (error) => {
           errorList.push(error);
@@ -122,10 +124,9 @@ export class DebuggerComponent implements OnInit {
             statuscode = error.Status;
             type = error.Type;
           })
-          this.responseService.addToLog(1, "GET", statuscode, type, this.debuggerForm.value.requestInput, error)
+          this.responseService.addToLog(1, "GET", this.timerService.getTimer(), statuscode, type, this.debuggerForm.value.requestInput, error)
         },
       })
-
   }
 
   public sendPostRequest(): void {
@@ -133,10 +134,11 @@ export class DebuggerComponent implements OnInit {
     let type: string;
     let errorList = new Array<PxError>();
     let requestBody = JSON.parse(this.debuggerForm.value.requestBody);
+    this.timerService.setTimer();
     this.pxhttpService.post(this.debuggerForm.value.requestInput, requestBody)
       .subscribe({
         next: (response) => {
-          this.responseService.addToLog(0, "POST", 201, 'created', this.debuggerForm.value.requestInput, response, requestBody);
+          this.responseService.addToLog(0, "POST", this.timerService.getTimer(), 201, 'created', this.debuggerForm.value.requestInput, response, requestBody);
           console.log(response, requestBody);
         },
         error: (error) => {
@@ -145,7 +147,7 @@ export class DebuggerComponent implements OnInit {
             statuscode = error.Status;
             type = error.Type;
           })
-          this.responseService.addToLog(1, "POST", statuscode, type, this.debuggerForm.value.requestInput, error)
+          this.responseService.addToLog(1, "POST", this.timerService.getTimer(), statuscode, type, this.debuggerForm.value.requestInput, error)
         }
       })
   }
@@ -155,10 +157,11 @@ export class DebuggerComponent implements OnInit {
     let type: string;
     let errorList = new Array<PxError>();
     let requestBody = JSON.parse(this.debuggerForm.value.requestBody);
+    this.timerService.setTimer();
     this.pxhttpService.put(this.debuggerForm.value.requestInput, requestBody)
       .subscribe({
         next: (response) => {
-          this.responseService.addToLog(0, "PUT", 201, 'created', this.debuggerForm.value.requestInput, response, requestBody);
+          this.responseService.addToLog(0, "PUT", this.timerService.getTimer(), 204, 'no content', this.debuggerForm.value.requestInput, response, requestBody);
           console.log(response);
         },
         error: (error) => {
@@ -167,7 +170,7 @@ export class DebuggerComponent implements OnInit {
             statuscode = error.Status;
             type = error.Type;
           })
-          this.responseService.addToLog(1, "PUT", statuscode, type, this.debuggerForm.value.requestInput, error)
+          this.responseService.addToLog(1, "PUT", this.timerService.getTimer(), statuscode, type, this.debuggerForm.value.requestInput, error)
         }
       })
   }
@@ -177,10 +180,11 @@ export class DebuggerComponent implements OnInit {
     let type: string;
     let errorList = new Array<PxError>();
     let requestBody = JSON.parse(this.debuggerForm.value.requestBody);
+    this.timerService.setTimer();
     this.pxhttpService.patch(this.debuggerForm.value.requestInput, requestBody)
       .subscribe({
         next: (response) => {
-          this.responseService.addToLog(0, "PATCH", 201, 'created', this.debuggerForm.value.requestInput, response!, requestBody);
+          this.responseService.addToLog(0, "PATCH", 204, this.timerService.getTimer(), 'no content', this.debuggerForm.value.requestInput, response!, requestBody);
           console.log(response);
         },
         error: (error) => {
@@ -189,7 +193,7 @@ export class DebuggerComponent implements OnInit {
             statuscode = error.Status;
             type = error.Type;
           })
-          this.responseService.addToLog(1, "PATCH", statuscode, type, this.debuggerForm.value.requestInput, error)
+          this.responseService.addToLog(1, "PATCH", this.timerService.getTimer(), statuscode, type, this.debuggerForm.value.requestInput, error)
         }
       })
   }
@@ -198,20 +202,26 @@ export class DebuggerComponent implements OnInit {
     let statuscode: number;
     let type: string;
     let errorList = new Array<PxError>();
-    this.pxhttpService.delete(this.debuggerForm.value.requestInput)
-      .subscribe({
-        next: (response) => {
-          this.responseService.addToLog(0, "DELETE", 201, 'created', this.debuggerForm.value.requestInput, "Datensatz wurde gelöscht!");
-          console.log(response);
-        },
-        error: (error) => {
-          errorList.push(error);
-          errorList.forEach(error => {
-            statuscode = error.Status;
-            type = error.Type;
-          })
-          this.responseService.addToLog(1, "DELETE", statuscode, type, this.debuggerForm.value.requestInput, error)
-        }
-      })
+    try {
+      this.timerService.setTimer();
+      this.pxhttpService.delete(this.debuggerForm.value.requestInput)
+        .subscribe({
+          next: (response) => {
+            this.responseService.addToLog(0, "DELETE", this.timerService.getTimer(), 204, 'no content', this.debuggerForm.value.requestInput, "Datensatz wurde gelöscht!");
+            console.log(response);
+          },
+          error: (error) => {
+            errorList.push(error);
+            errorList.forEach(error => {
+              statuscode = error.Status;
+              type = error.Type;
+            })
+            this.responseService.addToLog(1, "DELETE", this.timerService.getTimer(), statuscode, type, this.debuggerForm.value.requestInput, error)
+          }
+        })
+    } catch (error) {
+      reportError(error);
+    }
+
   }
 }
