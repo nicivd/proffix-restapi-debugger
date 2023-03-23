@@ -194,17 +194,7 @@ export class DebuggerComponent implements OnInit, OnDestroy {
   }
 
   public emptyRequestbodyError(error: any): void {
-    let message;
-    if (error instanceof Error) {
-      message = error.message;
-    } else {
-      message = String(error);
-    }
-    if (message === 'Unexpected end of JSON input') {
-      this.errorMessage = 'Request Body ist leer oder fehlerhaft!';
-    } else {
-      this.errorMessage = message;
-    }
+    this.errorMessage = 'Request Body ist leer oder fehlerhaft!';
   }
 
   public deleteLog(): void {
