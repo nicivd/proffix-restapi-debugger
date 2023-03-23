@@ -1,4 +1,10 @@
 <div class="container">
+  <div>
+    <h4>
+      <i class="bi bi-check-circle-fill" style="color: green"></i>
+      Eingeloggt als: {{username}}
+    </h4>
+  </div>
   <h2>Requests</h2>
   <hr>
   <form [formGroup]="debuggerForm" (ngSubmit)="validateRequest()">
@@ -64,8 +70,8 @@
     <div class="card-body">
       <p><b> HTTP Statuscode:</b> {{response.statuscode}} {{response.type}}</p>
       <p><b>PxSessionID:</b> {{pxsessionID}}</p>
-      <button *ngIf="response.responseBody!==''" type="button" class="btn btn-outline-primary ms-2 mb-3"
-        (click)="isCollapsed[i] = !isCollapsed[i]" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+      <button type="button" class="btn btn-outline-primary ms-2 mb-3" (click)="isCollapsed[i] = !isCollapsed[i]"
+        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
         Response Body (Antwort)
       </button>
       <div #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed[i]" class="mb-2">
@@ -78,12 +84,13 @@
         </div>
       </div>
       <div>
-        <button *ngIf="!(response.httpMethod=='GET' || response.httpMethod=='DELETE' || null || undefined)"
+        <button
+          *ngIf="!(response.httpMethod=='GET' || response.httpMethod=='DELETE' || response.responseBody!==undefined)"
           type="button" class="btn btn-outline-primary ms-2 mr-2" (click)="isCollapsed2[i] = ! isCollapsed2[i]"
           aria-controls="collapseExample">
           Request Body (Anfrage)
         </button>
-        <div *ngIf="response.requestBody !== undefined" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed2[i]">
+        <div *ngIf="response.requestBody !== undefined" #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed2[i]">
           <div class="card">
             <div class="card-body">
               <ngx-json-viewer [json]="response.requestBody" style="--ngx-json-null-bg:none"

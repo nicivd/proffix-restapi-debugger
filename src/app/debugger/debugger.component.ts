@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavigationStart, Router } from '@angular/router';
-import { PxHttpService, PxLoginService } from 'projects/lib/src/public-api';
+import { PxHttpService, PxLocalStorageService, PxLoginService } from 'projects/lib/src/public-api';
 import { HttpMethod } from '../models/http-method';
 import { ToastService } from '../services/toast.service';
 import { ResponseService } from '../services/response.service';
@@ -21,7 +21,8 @@ export class DebuggerComponent implements OnInit, OnDestroy {
   showReqBody: boolean = false;
   isCollapsed: boolean[] = [];
   isCollapsed2: boolean[] = [];
-  errorMessage: string = "";
+  errorMessage: string = '';
+  username: string = '';
 
   responseList = new Array<Response>();
   unsubscribe = new Subject<void>();
@@ -29,11 +30,11 @@ export class DebuggerComponent implements OnInit, OnDestroy {
   pxsessionID = RequestInterceptor.pxSessionId;
 
   httpMethodList: HttpMethod[] = [
-    { id: 0, name: "GET" },
-    { id: 1, name: "POST" },
-    { id: 2, name: "PUT" },
-    { id: 3, name: "PATCH" },
-    { id: 4, name: "DELETE" }
+    { id: 0, name: 'GET' },
+    { id: 1, name: 'POST' },
+    { id: 2, name: 'PUT' },
+    { id: 3, name: 'PATCH' },
+    { id: 4, name: 'DELETE' }
   ];
 
   constructor(
@@ -44,6 +45,7 @@ export class DebuggerComponent implements OnInit, OnDestroy {
     private toastService: ToastService,
     private responseService: ResponseService,
     private timerService: TimerService,
+    private pxlocalStorageService: PxLocalStorageService
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +63,12 @@ export class DebuggerComponent implements OnInit, OnDestroy {
     });
     this.checkLogin();
     this.getResponseList();
+    this.getLoginInfos();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.unsubscribe();
   }
 
   public getResponseList(): void {
@@ -74,9 +82,8 @@ export class DebuggerComponent implements OnInit, OnDestroy {
         });
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.unsubscribe();
+  public getLoginInfos(): void {
+    this.username = this.pxlocalStorageService.get('PROFFIX.CurrentUser');
   }
 
   public checkLogin(): void {
@@ -90,7 +97,7 @@ export class DebuggerComponent implements OnInit, OnDestroy {
 
   public sethttpBody(): void {
     let httpMethod = this.debuggerForm.value.httpMethod;
-    if (httpMethod === "POST" || httpMethod === "PUT" || httpMethod === "PATCH") {
+    if (httpMethod === 'POST' || httpMethod === 'PUT' || httpMethod === 'PATCH') {
       this.showReqBody = true;
     } else {
       this.showReqBody = false;
@@ -193,8 +200,8 @@ export class DebuggerComponent implements OnInit, OnDestroy {
     } else {
       message = String(error);
     }
-    if (message === "Unexpected end of JSON input") {
-      this.errorMessage = "Request Body ist leer oder fehlerhaft!";
+    if (message === 'Unexpected end of JSON input') {
+      this.errorMessage = 'Request Body ist leer oder fehlerhaft!';
     } else {
       this.errorMessage = message;
     }
