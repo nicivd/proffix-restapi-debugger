@@ -151,17 +151,7 @@ export class DebuggerComponent implements OnInit, OnDestroy {
       this.timerService.setTimer();
       this.pxhttpService.post(this.debuggerForm.value.requestInput, requestBody).subscribe()
     } catch (error) {
-      let message;
-      if (error instanceof Error) {
-        message = error.message;
-      } else {
-        message = String(error);
-      }
-      if (message === "Unexpected end of JSON input") {
-        this.errorMessage = "Request Body ist leer oder fehlerhaft!";
-      } else {
-        this.errorMessage = message;
-      }
+      this.emptyRequestbodyError(error);
     }
 
   }
@@ -172,7 +162,7 @@ export class DebuggerComponent implements OnInit, OnDestroy {
       this.timerService.setTimer();
       this.pxhttpService.put(this.debuggerForm.value.requestInput, requestBody).subscribe()
     } catch (error) {
-      reportError(error);
+      this.emptyRequestbodyError(error);
     }
 
   }
@@ -183,7 +173,7 @@ export class DebuggerComponent implements OnInit, OnDestroy {
       this.timerService.setTimer();
       this.pxhttpService.patch(this.debuggerForm.value.requestInput, requestBody).subscribe()
     } catch (error) {
-      reportError(error);
+      this.emptyRequestbodyError(error);
     }
   }
 
@@ -192,8 +182,21 @@ export class DebuggerComponent implements OnInit, OnDestroy {
       this.timerService.setTimer();
       this.pxhttpService.delete(this.debuggerForm.value.requestInput).subscribe()
     } catch (error) {
-      reportError(error);
+      this.emptyRequestbodyError(error);
     }
+  }
 
+  emptyRequestbodyError(error: any): void {
+    let message;
+    if (error instanceof Error) {
+      message = error.message;
+    } else {
+      message = String(error);
+    }
+    if (message === "Unexpected end of JSON input") {
+      this.errorMessage = "Request Body ist leer oder fehlerhaft!";
+    } else {
+      this.errorMessage = message;
+    }
   }
 }
