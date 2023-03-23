@@ -36,7 +36,7 @@
     </button>
   </span>
   <hr>
-  <div class="card m-2" *ngFor="let response of responseList">
+  <div class="card m-2" *ngFor="let response of responseList; let i = index">
     <div class="card-header" [ngClass]="{
             'positive' : response.color <= 0,
             'negative' : response.color > 0
@@ -44,7 +44,7 @@
       <div class="container">
         <div class="row">
           <div class="col-9 mt-2">
-            <h5 class="card-title">{{response.httpMethod + '/' + response.request}}</h5>
+            <h5 class="card-title">{{response.httpMethod + response.request}}</h5>
           </div>
           <div class="col mt-2">
             <p>Dauer: {{response.duration}}ms</p>
@@ -63,22 +63,22 @@
       <p><b> HTTP Statuscode:</b> {{response.statuscode}} {{response.type}}</p>
       <p><b>PxSessionID:</b> {{pxsessionID}}</p>
       <button *ngIf="response.responseBody!==''" type="button" class="btn btn-outline-primary ms-2 mb-3"
-        (click)="isCollapsed = ! isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+        (click)="isCollapsed[i] = !isCollapsed[i]" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
         Response Body (Antwort)
       </button>
-      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="mb-2">
+      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed[i]" class="mb-2">
         <div class="card">
           <div class="card-body"><ngx-json-viewer [json]="response.responseBody"
               style="--ngx-json-null:none; --ngx-json-null-bg:none" [expanded]="false"></ngx-json-viewer></div>
         </div>
       </div>
       <div>
-        <button *ngIf="!(response.httpMethod=='GET' || response.httpMethod=='DELETE') || null || undefined"
-          type="button" class="btn btn-outline-primary ms-2 mr-2" (click)="isCollapsed2 = ! isCollapsed2"
-          [attr.aria-expanded]="!isCollapsed2" aria-controls="collapseExample">
+        <button *ngIf="!(response.httpMethod=='GET' || response.httpMethod=='DELETE' || null || undefined)"
+          type="button" class="btn btn-outline-primary ms-2 mr-2" (click)="isCollapsed2[i] = ! isCollapsed2[i]"
+          aria-controls="collapseExample">
           Request Body (Anfrage)
         </button>
-        <div *ngIf="response.requestBody!==''" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed2">
+        <div *ngIf="response.requestBody !== undefined" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed2[i]">
           <div class="card">
             <div class="card-body">
               <ngx-json-viewer [json]="response.requestBody" style="--ngx-json-null-bg:none"

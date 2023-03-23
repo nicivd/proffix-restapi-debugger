@@ -19,8 +19,8 @@ export class DebuggerComponent implements OnInit, OnDestroy {
 
   debuggerForm!: FormGroup;
   showReqBody: boolean = false;
-  isCollapsed = true;
-  isCollapsed2 = true;
+  isCollapsed: boolean[] = [];
+  isCollapsed2: boolean[] = [];
   errorMessage: string = "";
 
   responseList = new Array<Response>();

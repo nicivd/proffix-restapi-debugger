@@ -40,7 +40,6 @@ export class ResponseService {
 
   public addToLog(color: number, httpMethod: string, duration: number, statuscode: number, type: any, request: string, response: any): void {
     this.getURL(request);
-
     const responseInfo: Response = {
       color: color,
       httpMethod: httpMethod,
