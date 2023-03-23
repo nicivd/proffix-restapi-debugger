@@ -69,7 +69,12 @@ export class ResponseService {
   }
 
   public deleteLogitem(id: string): void {
-
+    this.responseList.forEach(req => {
+      if (req.id == id) {
+        let index = this.responseList.indexOf(req);
+        this.responseList.splice(index, 1);
+      }
+    })
   }
 
 

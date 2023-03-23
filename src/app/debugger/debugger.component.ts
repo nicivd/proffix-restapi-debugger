@@ -204,7 +204,7 @@ export class DebuggerComponent implements OnInit, OnDestroy {
     this.responseService.resetList();
   }
 
-  public deleteLogItem() {
-
+  public deleteLogItem(id: string) {
+    this.responseService.deleteLogitem(id)
   }
 }
