@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Response } from '../models/response';
 import { PxConnectionSettingsService } from 'projects/lib/src/public-api';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,11 @@ export class ResponseService {
   public responseSubject = new BehaviorSubject<Array<Response>>([]);
   public responseList = Array<Response>();
 
-  requestUrl: string = "";
-  url: string = "";
-  formattedReq: string = "";
+  requestUrl: string = '';
+  url: string = '';
+  formattedReq: string = '';
   reqBody: any;
+  reqID!: Guid;
 
   constructor(
     private pxConnService: PxConnectionSettingsService
@@ -38,9 +40,15 @@ export class ResponseService {
     this.reqBody = JSON.parse(body);
   }
 
+  public generateID(): void {
+    this.reqID = Guid.create();
+  }
+
   public addToLog(color: number, httpMethod: string, duration: number, statuscode: number, type: any, request: string, response: any): void {
     this.getURL(request);
+    this.generateID();
     const responseInfo: Response = {
+      id: this.reqID.toString(),
       color: color,
       httpMethod: httpMethod,
       duration: duration,
@@ -57,6 +65,10 @@ export class ResponseService {
 
   public resetList(): void {
     this.responseList = [];
+  }
+
+  public deleteLogitem(itemKey: number): void {
+
   }
 
 
