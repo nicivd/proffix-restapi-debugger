@@ -28,13 +28,14 @@
       </div>
     </div>
   </form>
-  <h2>Response Log</h2>
-  <span style="float: right;">
-    <button style="margin-top: -55%;" type="button" class="btn btn-danger">
-      <i class="bi bi-trash"></i>
-      Löschen
-    </button>
-  </span>
+  <h2>Response Log
+    <span style="float: right;">
+      <button type="button" class="btn btn-danger" (click)="deleteLog()">
+        <i class="bi bi-trash"></i>
+        Log leeren
+      </button>
+    </span>
+  </h2>
   <hr>
   <div class="card m-2" *ngFor="let response of responseList; let i = index">
     <div class="card-header" [ngClass]="{
@@ -66,10 +67,13 @@
         (click)="isCollapsed[i] = !isCollapsed[i]" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
         Response Body (Antwort)
       </button>
-      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed[i]" class="mb-2">
+      <div #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed[i]" class="mb-2">
         <div class="card">
-          <div class="card-body"><ngx-json-viewer [json]="response.responseBody"
-              style="--ngx-json-null:none; --ngx-json-null-bg:none" [expanded]="false"></ngx-json-viewer></div>
+          <div class="card-body">
+            <ngx-json-viewer [json]="response.responseBody" style="--ngx-json-null:none; --ngx-json-null-bg:none"
+              [expanded]="false">
+            </ngx-json-viewer>
+          </div>
         </div>
       </div>
       <div>

@@ -54,11 +54,11 @@ export class DebuggerComponent implements OnInit, OnDestroy {
     });
     this.router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
-        if (event['url'] == '/login' || event['url'] == '/connection') {
+        if (event['url'] == '/debugger') {
           this.responseService.resetList()
         }
       }
-    })
+    });
     this.checkLogin();
     this.getResponseList();
   }
@@ -186,7 +186,7 @@ export class DebuggerComponent implements OnInit, OnDestroy {
     }
   }
 
-  emptyRequestbodyError(error: any): void {
+  public emptyRequestbodyError(error: any): void {
     let message;
     if (error instanceof Error) {
       message = error.message;
@@ -198,5 +198,13 @@ export class DebuggerComponent implements OnInit, OnDestroy {
     } else {
       this.errorMessage = message;
     }
+  }
+
+  public deleteLog(): void {
+    this.responseService.resetList();
+  }
+
+  public deleteLogItem() {
+
   }
 }

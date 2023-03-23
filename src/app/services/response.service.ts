@@ -9,8 +9,8 @@ import { Guid } from 'guid-typescript';
 })
 export class ResponseService {
 
-  public responseSubject = new BehaviorSubject<Array<Response>>([]);
-  public responseList = Array<Response>();
+  responseSubject = new BehaviorSubject<Array<Response>>([]);
+  responseList = Array<Response>();
 
   requestUrl: string = '';
   url: string = '';
@@ -65,9 +65,10 @@ export class ResponseService {
 
   public resetList(): void {
     this.responseList = [];
+    this.responseSubject.next(this.responseList);
   }
 
-  public deleteLogitem(itemKey: number): void {
+  public deleteLogitem(id: string): void {
 
   }
 
