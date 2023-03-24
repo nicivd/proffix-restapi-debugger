@@ -60,7 +60,6 @@ export class ResponseService {
     };
     this.responseList.unshift(responseInfo);
     this.responseSubject.next(this.responseList);
-    console.log(this.responseList);
   }
 
   public resetList(): void {

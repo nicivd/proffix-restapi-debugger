@@ -2,7 +2,7 @@
   <div>
     <h4>
       <i class="bi bi-check-circle-fill" style="color: green"></i>
-      Eingeloggt als: {{username}}
+      Eingeloggt als: {{currentuser}}, Datenbank: {{currentdatabase}}
     </h4>
   </div>
   <h2>Requests</h2>
@@ -85,7 +85,7 @@
       </div>
       <div>
         <button
-          *ngIf="!(response.httpMethod=='GET' || response.httpMethod=='DELETE' || response.responseBody!==undefined)"
+          *ngIf="!(response.httpMethod=='GET' || response.httpMethod=='DELETE' || response.requestBody==undefined)"
           type="button" class="btn btn-outline-primary ms-2 mr-2" (click)="isCollapsed2[i] = ! isCollapsed2[i]"
           aria-controls="collapseExample">
           Request Body (Anfrage)

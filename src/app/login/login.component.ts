@@ -5,6 +5,7 @@ import { PxDatenbank, PxDatenbankService, PxLoginService, PxLogin, PxHash, PxLoc
 import { Observable } from 'rxjs';
 import { ToastService } from '../services/toast.service';
 import { ResponseService } from '../services/response.service';
+import { TimerService } from '../services/timer.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   showDatabaseError: boolean = false;
   showUsernameError: boolean = false;
   showPasswordError: boolean = false;
+  showSpinner: boolean = this.timerService.showSpinner;
 
   databaseList: PxDatenbank[] = [];
 
@@ -28,7 +30,8 @@ export class LoginComponent implements OnInit {
     private toastService: ToastService,
     private router: Router,
     private pxlogalStorageService: PxLocalStorageService,
-    private responseService: ResponseService
+    private responseService: ResponseService,
+    private timerService: TimerService
   ) { }
 
   ngOnInit(): void {
@@ -58,9 +61,8 @@ export class LoginComponent implements OnInit {
               if (login) {
                 this.successToast();
                 this.showError = false;
-                if (this.loginForm.value.checkautologin) {
-                  this.pxlogalStorageService.set('PROFFIX.CurrentUser', login.Benutzer);
-                }
+                this.pxlogalStorageService.set('PROFFIX.CurrentUser', login.Benutzer);
+                this.pxlogalStorageService.set('PROFFIX.Database', login.Datenbank.Name);
               }
             },
             error: (errorMessage) => {

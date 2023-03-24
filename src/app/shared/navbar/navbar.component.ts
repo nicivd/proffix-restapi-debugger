@@ -36,8 +36,8 @@ export class NavbarComponent implements OnInit {
       .subscribe({
         next: () => {
           this.pxloginService.removeAutoLogin();
-          this.pxlocalStorageService.remove('Proffix.CurrentUser');
-          this.toastService.show('Sie werden ausgeloggt.', { classname: 'bg-danger text-light', delay: 6000 });
+          this.pxlocalStorageService.remove('PROFFIX.CurrentUser');
+          this.toastService.show('Sie sind ausgeloggt.', { classname: 'bg-danger text-light', delay: 6000 });
           this.router.navigateByUrl('/login');
         },
         error: (error) => {

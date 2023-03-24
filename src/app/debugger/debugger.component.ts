@@ -22,7 +22,8 @@ export class DebuggerComponent implements OnInit, OnDestroy {
   isCollapsed: boolean[] = [];
   isCollapsed2: boolean[] = [];
   errorMessage: string = '';
-  username: string = '';
+  currentuser: string = '';
+  currentdatabase: string = '';
 
   responseList = new Array<Response>();
   unsubscribe = new Subject<void>();
@@ -83,7 +84,8 @@ export class DebuggerComponent implements OnInit, OnDestroy {
   }
 
   public getLoginInfos(): void {
-    this.username = this.pxlocalStorageService.get('PROFFIX.CurrentUser');
+    this.currentuser = this.pxlocalStorageService.get('PROFFIX.CurrentUser');
+    this.currentdatabase = this.pxlocalStorageService.get('PROFFIX.Database');
   }
 
   public checkLogin(): void {

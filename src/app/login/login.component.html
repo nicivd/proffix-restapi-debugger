@@ -38,7 +38,7 @@
           </div>
           <div>
             Module:
-            <div class="form-check">
+            <div class="form-check float-right">
               <input class="form-check-input" type="checkbox" value="" id="checkModules" checked disabled>
               <label class="form-check-label" for="checkModules">
                 VOL
@@ -56,6 +56,11 @@
           <div class="m-2">
             <button style="margin-right: 2%" type="submit" class="btn btn-primary">Login</button>
             <button type="" class="btn btn-primary" (click)="logout()">Abbrechen</button>
+          </div>
+          <div *ngIf="showSpinner" class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only"></span>
+            </div>
           </div>
         </div>
       </div>
