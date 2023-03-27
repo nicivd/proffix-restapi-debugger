@@ -10,7 +10,6 @@ import {
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { ResponseService } from '../services/response.service';
 import { TimerService } from '../services/timer.service';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
@@ -20,12 +19,10 @@ export class RequestInterceptor implements HttpInterceptor {
   constructor(
     private responseService: ResponseService,
     private timerService: TimerService,
-    private router: Router,
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    //Create sessionID
     if (request.headers.get('PxSessionId') !== null) {
       RequestInterceptor.pxSessionId = request.headers.get('PxSessionId');
     }

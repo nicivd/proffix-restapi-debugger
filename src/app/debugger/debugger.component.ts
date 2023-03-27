@@ -156,11 +156,11 @@ export class DebuggerComponent implements OnInit, OnDestroy {
   public sendPostRequest(): void {
     try {
       let requestBody = JSON.parse(this.debuggerForm.value.requestBody);
-      this.responseService.getRequestBody(this.debuggerForm.value.requestBody);
+      this.responseService.setRequestBody(this.debuggerForm.value.requestBody);
       this.timerService.setTimer();
       this.pxhttpService.post(this.debuggerForm.value.requestInput, requestBody).subscribe()
     } catch (error) {
-      this.emptyRequestbodyError(error);
+      this.wrongRequestbodyError(error);
     }
 
   }
@@ -171,7 +171,7 @@ export class DebuggerComponent implements OnInit, OnDestroy {
       this.timerService.setTimer();
       this.pxhttpService.put(this.debuggerForm.value.requestInput, requestBody).subscribe()
     } catch (error) {
-      this.emptyRequestbodyError(error);
+      this.wrongRequestbodyError(error);
     }
 
   }
@@ -182,7 +182,7 @@ export class DebuggerComponent implements OnInit, OnDestroy {
       this.timerService.setTimer();
       this.pxhttpService.patch(this.debuggerForm.value.requestInput, requestBody).subscribe()
     } catch (error) {
-      this.emptyRequestbodyError(error);
+      this.wrongRequestbodyError(error);
     }
   }
 
@@ -191,11 +191,17 @@ export class DebuggerComponent implements OnInit, OnDestroy {
       this.timerService.setTimer();
       this.pxhttpService.delete(this.debuggerForm.value.requestInput).subscribe()
     } catch (error) {
-      this.emptyRequestbodyError(error);
+      let message;
+      if (error instanceof Error) {
+        message = error.message;
+      } else {
+        message = String(error);
+      }
+      reportError({ message });
     }
   }
 
-  public emptyRequestbodyError(error: any): void {
+  public wrongRequestbodyError(error: any): void {
     this.errorMessage = 'Request Body ist leer oder fehlerhaft!';
   }
 

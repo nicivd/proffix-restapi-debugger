@@ -36,7 +36,7 @@ export class ResponseService {
     this.url = conn.WebserviceUrl;
   }
 
-  public getRequestBody(body: any): void {
+  public setRequestBody(body: any): void {
     this.reqBody = JSON.parse(body);
   }
 
@@ -68,7 +68,6 @@ export class ResponseService {
   }
 
   public deleteLogitem(id: string): void {
-
     this.responseList.forEach(req => {
       if (req.id == id) {
         let index = this.responseList.indexOf(req);
