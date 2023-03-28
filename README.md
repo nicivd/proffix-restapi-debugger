@@ -1,27 +1,28 @@
-# Proffixrestapidebugger
+# Proffix REST API Debugger
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.2.
+Der Proffix REST API Debugger ist ausschliesslich für die Proffix REST API von Px5 konzipiert. Man verbindet sich mit einer Proffix REST API Instanz und loggt sich mit einem Proffix Benutzer ein. Anschliessend kann man Requests(Anfragen) an die verbundene Proffix REST API senden und erhält die Responses (Antworten) als "Log-Einträge" abgebildet.
 
-## Development server
+## Anforderungen an die Entwicklungsumgebung
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+* Lokale Proffix Px5 Installation
+  * Gültige Lizenz
+  * Proffix Datenbank
+* Laufende und erreichbare Proffix REST API 
+* IDE (z.B.Visual Studio Code)
 
-## Code scaffolding
+## Enwicklungsumgebung in Betrieb nehmen
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 1. Projekt initialisieren
+[Repository](https://github.com/nicivd/proffix-restapi-debugger) herunterladen oder Klonen. Den Befehl "npm install" ausführen um alle nötigen npm-Packages herunterzuladen. 
 
-## Build
+### 2. Proffix REST API Library installieren
+[Proffix REST API Library](https://github.com/PROFFIX-NET/restapi-angular-library) als npm-Package installieren oder herunterladen.
+Achtung: Die Proffix REST API Library ist vom npm-Package ["Moment"](https://www.npmjs.com/package/moment) Abhängig. 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 3. Proffix REST API Debugger starten
+Mit dem Befehl "ng serve" wird der Proffix REST API Debugger lokal gestartet. 
 
-## Running unit tests
+## Veröffentlichung der Entwicklungsumgebung
+Der Proffix REST API Debugger wurde mit Github-Pages Veröffentlicht. Es kann das npm-Package ["angular-cli-ghpages" ](https://www.npmjs.com/package/angular-cli-ghpages#quickstart-local) verwendet werden, um das Veröffentlichen der Angular Applikation zu vereinfachen. Der Proffix REST API Debugger ist under [diesem Link](https://nicivd.github.io/proffix-restapi-debugger) aufrufbar.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
